@@ -246,12 +246,6 @@ export function AnalysisDashboard({
                 </Button>
               </>
             )}
-            {onStartNewAnalysis && (
-              <Button onClick={onStartNewAnalysis} className="gap-2">
-                <Plus className="h-4 w-4" />
-                Start New Report
-              </Button>
-            )}
           </div>
         </div>
       </div>
@@ -372,12 +366,6 @@ export function AnalysisDashboard({
                       There was an error processing your document. Please try
                       again.
                     </p>
-                    {onStartNewAnalysis && (
-                      <Button onClick={onStartNewAnalysis} className="gap-2">
-                        <Plus className="h-4 w-4" />
-                        Try Again
-                      </Button>
-                    )}
                   </>
                 )}
               </CardContent>

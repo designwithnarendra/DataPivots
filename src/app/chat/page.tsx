@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
+import { GlobalHeader } from "@/components/molecules/GlobalHeader";
 import { TwoColumnChatLayout } from "@/components/organisms/TwoColumnChatLayout";
-import { Button } from "@/components/ui/button";
 
 export default function ChatPage() {
   const { isAuthenticated, isLoading, user, logout } = useAuth();
@@ -39,32 +39,11 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
-      <header className="flex-shrink-0 border-b border-border bg-card">
-        <div className="flex h-16 items-center justify-between px-6">
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              onClick={() => router.push("/dashboard")}
-              className="text-2xl font-bold text-primary font-heading hover:bg-transparent"
-            >
-              DataPivots
-            </Button>
-          </div>
-          <div className="flex items-center space-x-4">
-            <span className="text-sm text-muted-foreground">
-              Welcome, {user?.name}
-            </span>
-            <Button variant="outline" onClick={handleLogout}>
-              Sign out
-            </Button>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-background">
+      <GlobalHeader />
 
       {/* Main Chat Interface */}
-      <main className="flex-1 flex">
+      <main className="flex">
         <div className="w-full flex flex-col h-[calc(100vh-4rem)]">
           <TwoColumnChatLayout />
         </div>

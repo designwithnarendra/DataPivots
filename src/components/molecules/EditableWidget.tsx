@@ -85,7 +85,7 @@ export function EditableWidget({
         return <MetricsEditor data={editedData} onChange={setEditedData} />;
       default:
         return (
-          <div className="text-center py-8 text-muted-foreground">
+          <div className="text-center py-4 text-muted-foreground text-sm">
             Editing not available for this widget type
           </div>
         );
@@ -94,22 +94,22 @@ export function EditableWidget({
 
   return (
     <Card className="border-primary shadow-8dp">
-      <CardHeader className="bg-primary/5">
+      <CardHeader className="bg-primary/5 p-4">
         <div className="flex items-center justify-between">
           <div className="flex-1">
-            <Label htmlFor="widget-title" className="text-sm font-medium">
+            <Label htmlFor="widget-title" className="text-xs font-medium">
               Widget Title
             </Label>
             <Input
               id="widget-title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="mt-1"
+              className="mt-1 h-8"
             />
           </div>
         </div>
       </CardHeader>
-      <CardContent className="p-6">
+      <CardContent className="p-4">
         {error && (
           <Alert variant="destructive" className="mb-4">
             <AlertCircle className="h-4 w-4" />
@@ -119,7 +119,7 @@ export function EditableWidget({
 
         {renderEditableContent()}
 
-        <div className="flex justify-end gap-2 mt-6 pt-4 border-t">
+        <div className="flex justify-end gap-2 mt-4 pt-3 border-t">
           <Button
             variant="outline"
             onClick={onCancel}
@@ -175,7 +175,7 @@ function SummaryEditor({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h4 className="font-medium">Summary Fields</h4>
+        <h4 className="font-medium text-sm">Summary Fields</h4>
         <Button
           variant="outline"
           size="sm"
@@ -237,7 +237,7 @@ function TableEditor({
 
   if (!Array.isArray(tableData) || tableData.length === 0) {
     return (
-      <div className="text-center py-8 text-muted-foreground">
+      <div className="text-center py-4 text-muted-foreground text-sm">
         No table data to edit
       </div>
     );
@@ -276,7 +276,7 @@ function TableEditor({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h4 className="font-medium">Table Data</h4>
+        <h4 className="font-medium text-sm">Table Data</h4>
         <Button variant="outline" size="sm" onClick={addRow} className="gap-2">
           <Plus className="h-3 w-3" />
           Add Row
@@ -291,7 +291,7 @@ function TableEditor({
                 {columns.map((column) => (
                   <th
                     key={column}
-                    className="text-left p-3 font-medium text-sm"
+                    className="text-left p-2 font-medium text-xs"
                   >
                     {column}
                   </th>
@@ -303,7 +303,7 @@ function TableEditor({
               {tableData.map((row, rowIndex) => (
                 <tr key={rowIndex} className="border-t">
                   {columns.map((column) => (
-                    <td key={column} className="p-2">
+                    <td key={column} className="p-1">
                       <Input
                         value={String(row[column] || "")}
                         onChange={(e) =>
@@ -313,7 +313,7 @@ function TableEditor({
                       />
                     </td>
                   ))}
-                  <td className="p-2">
+                  <td className="p-1">
                     <Button
                       variant="ghost"
                       size="sm"
@@ -366,7 +366,7 @@ function MetricsEditor({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h4 className="font-medium">Metrics</h4>
+        <h4 className="font-medium text-sm">Metrics</h4>
         <Button
           variant="outline"
           size="sm"

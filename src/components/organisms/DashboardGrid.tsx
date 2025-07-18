@@ -53,44 +53,76 @@ export function DashboardGrid({
     );
   }
 
+  // Function to get minimum dimensions based on widget type
+  const getMinDimensions = (widget: Widget) => {
+    switch (widget.type) {
+      case "chart":
+        // Charts need minimum space to be readable
+        return { minW: 4, minH: 5 };
+      case "table":
+        // Tables need width for columns and height for rows
+        return { minW: 4, minH: 4 };
+      case "metrics":
+        // Metrics can be smaller but need decent space for numbers
+        return { minW: 2, minH: 3 };
+      case "summary":
+        // Summary widgets need space for text
+        return { minW: 3, minH: 4 };
+      default:
+        return { minW: 2, minH: 3 };
+    }
+  };
+
   // Convert widgets to grid layout format
   const layouts = {
-    lg: widgets.map((widget) => ({
-      i: widget.id,
-      x: widget.position.x,
-      y: widget.position.y,
-      w: widget.position.w,
-      h: widget.position.h,
-      minW: 2,
-      minH: 2,
-    })),
-    md: widgets.map((widget) => ({
-      i: widget.id,
-      x: widget.position.x % 8, // Adjust for smaller grid
-      y: widget.position.y,
-      w: Math.min(widget.position.w, 8),
-      h: widget.position.h,
-      minW: 2,
-      minH: 2,
-    })),
-    sm: widgets.map((widget) => ({
-      i: widget.id,
-      x: widget.position.x % 6,
-      y: widget.position.y,
-      w: Math.min(widget.position.w, 6),
-      h: widget.position.h,
-      minW: 2,
-      minH: 2,
-    })),
-    xs: widgets.map((widget) => ({
-      i: widget.id,
-      x: 0,
-      y: widget.position.y,
-      w: 4,
-      h: widget.position.h,
-      minW: 4,
-      minH: 2,
-    })),
+    lg: widgets.map((widget) => {
+      const { minW, minH } = getMinDimensions(widget);
+      return {
+        i: widget.id,
+        x: widget.position.x,
+        y: widget.position.y,
+        w: Math.max(widget.position.w, minW),
+        h: Math.max(widget.position.h, minH),
+        minW,
+        minH,
+      };
+    }),
+    md: widgets.map((widget) => {
+      const { minW, minH } = getMinDimensions(widget);
+      return {
+        i: widget.id,
+        x: widget.position.x % 8, // Adjust for smaller grid
+        y: widget.position.y,
+        w: Math.max(Math.min(widget.position.w, 8), minW),
+        h: Math.max(widget.position.h, minH),
+        minW,
+        minH,
+      };
+    }),
+    sm: widgets.map((widget) => {
+      const { minW, minH } = getMinDimensions(widget);
+      return {
+        i: widget.id,
+        x: widget.position.x % 6,
+        y: widget.position.y,
+        w: Math.max(Math.min(widget.position.w, 6), minW),
+        h: Math.max(widget.position.h, minH),
+        minW,
+        minH,
+      };
+    }),
+    xs: widgets.map((widget) => {
+      const { minW, minH } = getMinDimensions(widget);
+      return {
+        i: widget.id,
+        x: 0,
+        y: widget.position.y,
+        w: Math.max(4, minW),
+        h: Math.max(widget.position.h, minH),
+        minW: Math.max(4, minW),
+        minH,
+      };
+    }),
   };
 
   const breakpoints = {
@@ -119,6 +151,7 @@ export function DashboardGrid({
         containerPadding={[0, 0]}
         isDraggable={editable}
         isResizable={editable}
+        resizeHandles={["se", "sw", "ne", "nw", "s", "n", "e", "w"]}
         onLayoutChange={(layout) => {
           if (onLayoutChange) {
             onLayoutChange(layout);
@@ -175,26 +208,55 @@ export function DashboardGrid({
           opacity: 1 !important;
         }
 
-        .react-grid-item > .react-resizable-handle::after {
+        /* Bottom-right corner handle (main resize handle) */
+        .react-grid-item
+          > .react-resizable-handle.react-resizable-handle-se::after {
           border: none !important;
-          content: "" !important;
+          content: "⋰" !important;
           position: absolute !important;
           right: 1px !important;
           bottom: 1px !important;
+          width: 12px !important;
+          height: 12px !important;
+          background: hsl(var(--background)) !important;
+          color: hsl(var(--primary)) !important;
+          font-size: 12px !important;
+          line-height: 12px !important;
+          text-align: center !important;
+          border: 1px solid hsl(var(--border)) !important;
+          border-radius: 2px !important;
+        }
+
+        /* Edge handles - horizontal */
+        .react-grid-item > .react-resizable-handle.react-resizable-handle-s,
+        .react-grid-item > .react-resizable-handle.react-resizable-handle-n {
+          background: hsl(var(--primary) / 0.5) !important;
+          border-radius: 2px !important;
+          height: 4px !important;
+        }
+
+        /* Edge handles - vertical */
+        .react-grid-item > .react-resizable-handle.react-resizable-handle-e,
+        .react-grid-item > .react-resizable-handle.react-resizable-handle-w {
+          background: hsl(var(--primary) / 0.5) !important;
+          border-radius: 2px !important;
+          width: 4px !important;
+        }
+
+        /* Corner handles */
+        .react-grid-item > .react-resizable-handle.react-resizable-handle-sw,
+        .react-grid-item > .react-resizable-handle.react-resizable-handle-ne,
+        .react-grid-item > .react-resizable-handle.react-resizable-handle-nw {
+          background: hsl(var(--primary) / 0.6) !important;
+          border-radius: 50% !important;
           width: 8px !important;
           height: 8px !important;
-          background: linear-gradient(
-            -45deg,
-            transparent 40%,
-            hsl(var(--primary-foreground)) 40%,
-            hsl(var(--primary-foreground)) 60%,
-            transparent 60%
-          ) !important;
         }
 
         .widget-container {
           height: 100%;
           overflow: hidden;
+          padding: 12px;
         }
       `}</style>
     </div>

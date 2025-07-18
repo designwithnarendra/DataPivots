@@ -206,8 +206,8 @@ export const useChat = () => {
     setSelectedReportType(null);
     setUploadedFile(null);
     setIsProcessing(false);
-    setCurrentStep("greeting");
-    localStorage.removeItem(CHAT_STORAGE_KEY);
+    setCurrentStep("type-selection");
+    localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify([INITIAL_GREETING]));
   }, []);
 
   const startNewAnalysis = useCallback(() => {

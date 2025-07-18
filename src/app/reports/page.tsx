@@ -4,14 +4,9 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { useReports } from "@/hooks/useReports";
+import { GlobalHeader } from "@/components/molecules/GlobalHeader";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { ReportsFilters } from "@/components/molecules/ReportsFilters";
 import { ReportsTable } from "@/components/molecules/ReportsTable";
 import { ReportsPagination } from "@/components/molecules/ReportsPagination";
@@ -139,32 +134,11 @@ export default function ReportsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
-      <header className="flex-shrink-0 border-b border-border bg-card">
-        <div className="flex h-16 items-center justify-between px-6">
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              onClick={() => router.push("/dashboard")}
-              className="text-2xl font-bold text-primary font-heading hover:bg-transparent"
-            >
-              DataPivots
-            </Button>
-          </div>
-          <div className="flex items-center space-x-4">
-            <span className="text-sm text-muted-foreground">
-              Welcome, {user?.name}
-            </span>
-            <Button variant="outline" onClick={handleLogout}>
-              Sign out
-            </Button>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-background">
+      <GlobalHeader />
 
       {/* Main Content */}
-      <main className="flex-1 container mx-auto px-6 py-8">
+      <main className="container mx-auto px-6 py-8">
         <div className="space-y-6">
           {/* Page Header */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -184,34 +158,36 @@ export default function ReportsPage() {
 
           {/* Reports Management */}
           {totalReports > 0 ? (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="h-5 w-5" />
+            <div className="space-y-6">
+              {/* Section Header */}
+              <div className="space-y-2">
+                <h2 className="text-h5 font-bold font-heading flex items-center gap-3">
+                  <FileText className="h-6 w-6 text-primary" />
                   All Reports
-                </CardTitle>
-                <CardDescription>
+                </h2>
+                <p className="text-muted-foreground">
                   Search, filter, and manage your document analysis reports
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Filters */}
-                <ReportsFilters
-                  searchQuery={searchQuery}
-                  setSearchQuery={setSearchQuery}
-                  statusFilter={statusFilter}
-                  setStatusFilter={setStatusFilter}
-                  typeFilter={typeFilter}
-                  setTypeFilter={setTypeFilter}
-                  selectedReports={selectedReports}
-                  totalReports={totalReports}
-                  filteredCount={filteredReportsCount}
-                  onBatchExport={handleBatchExport}
-                  onBatchDelete={handleBatchDelete}
-                  onClearSelection={clearSelection}
-                />
+                </p>
+              </div>
 
-                {/* Reports Table */}
+              {/* Filters */}
+              <ReportsFilters
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                statusFilter={statusFilter}
+                setStatusFilter={setStatusFilter}
+                typeFilter={typeFilter}
+                setTypeFilter={setTypeFilter}
+                selectedReports={selectedReports}
+                totalReports={totalReports}
+                filteredCount={filteredReportsCount}
+                onBatchExport={handleBatchExport}
+                onBatchDelete={handleBatchDelete}
+                onClearSelection={clearSelection}
+              />
+
+              {/* Reports Table */}
+              <div className="border rounded-lg overflow-hidden">
                 <ReportsTable
                   reports={reports}
                   selectedReports={selectedReports}
@@ -227,19 +203,19 @@ export default function ReportsPage() {
                   onDelete={deleteReport}
                   onExport={handleExportReport}
                 />
+              </div>
 
-                {/* Pagination */}
-                {totalPages > 1 && (
-                  <ReportsPagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={setCurrentPage}
-                    itemsPerPage={itemsPerPage}
-                    totalItems={filteredReportsCount}
-                  />
-                )}
-              </CardContent>
-            </Card>
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <ReportsPagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                  itemsPerPage={itemsPerPage}
+                  totalItems={filteredReportsCount}
+                />
+              )}
+            </div>
           ) : (
             /* Empty State */
             <Card>

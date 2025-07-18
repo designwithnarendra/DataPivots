@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Figtree, Lexend } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const figtree = Figtree({
   variable: "--font-heading",
@@ -33,9 +34,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${figtree.variable} ${lexend.variable} antialiased`}>
-        {children}
+        <ThemeProvider defaultTheme="light" storageKey="datapivots-ui-theme">
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

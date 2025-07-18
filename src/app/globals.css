@@ -187,14 +187,220 @@ body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
   font-family: var(--font-body);
+  font-size: 18px; /* Desktop base */
   line-height: 1.7;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50 cursor-default;
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Interactive Elements Cursor - Comprehensive */
+  button, 
+  a, 
+  [role="button"], 
+  [role="link"],
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  .cursor-pointer,
+  /* Button components and all their children */
+  button *,
+  [role="button"] *,
+  /* Clickable table rows */
+  tr[role="button"],
+  tr.cursor-pointer,
+  .clickable-row,
+  /* Card components when clickable */
+  .clickable-card,
+  .clickable-card *,
+  /* Navigation items */
+  nav a,
+  nav button,
+  nav [role="button"],
+  /* Dropdown items */
+  [role="menuitem"],
+  [role="option"],
+  /* Tab components */
+  [role="tab"],
+  /* All shadcn/ui interactive components */
+  [data-slot="button"],
+  [data-slot="button"] *,
+  [data-radix-collection-item],
+  /* Ensure all interactive elements have pointer cursor */
+  .react-grid-item .react-resizable-handle,
+  .widget-container [role="button"],
+  /* Form controls that are clickable */
+  select,
+  /* Custom interactive elements */
+  .interactive,
+  .interactive * {
+    cursor: pointer !important;
+  }
+
+  /* Text utilities */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Typography Scale - Desktop (Base: 18px) */
+  .text-body {
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .text-h6 {
+    font-size: 24px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+  }
+
+  .text-h5 {
+    font-size: 32px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+  }
+
+  .text-h4 {
+    font-size: 42px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+  }
+
+  .text-h3 {
+    font-size: 56px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+  }
+
+  .text-h2 {
+    font-size: 72px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+  }
+
+  .text-h1 {
+    font-size: 96px;
+    font-family: var(--font-heading);
+    font-weight: 800;
+  }
+
+  .text-small {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .text-xs-custom {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  /* Default heading styles */
+  h1 {
+    font-size: 96px;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 72px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: 56px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  h4 {
+    font-size: 42px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  h5 {
+    font-size: 32px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  h6 {
+    font-size: 24px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  /* Mobile Typography (Base: 16px) */
+  @media (max-width: 768px) {
+    body {
+      font-size: 16px;
+    }
+
+    .text-body {
+      font-size: 16px;
+    }
+
+    .text-h6 {
+      font-size: 20px;
+    }
+
+    .text-h5 {
+      font-size: 24px;
+    }
+
+    .text-h4 {
+      font-size: 32px;
+    }
+
+    .text-h3 {
+      font-size: 48px;
+    }
+
+    .text-h2 {
+      font-size: 64px;
+    }
+
+    .text-h1 {
+      font-size: 80px;
+    }
+
+    h1 {
+      font-size: 80px;
+    }
+
+    h2 {
+      font-size: 64px;
+    }
+
+    h3 {
+      font-size: 48px;
+    }
+
+    h4 {
+      font-size: 32px;
+    }
+
+    h5 {
+      font-size: 24px;
+    }
+
+    h6 {
+      font-size: 20px;
+    }
   }
 }

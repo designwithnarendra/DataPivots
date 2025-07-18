@@ -110,11 +110,11 @@ export function ChangeHistoryDialog({
       <DialogTrigger asChild>{trigger || defaultTrigger}</DialogTrigger>
       <DialogContent className="max-w-4xl h-[80vh]">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <History className="h-5 w-5" />
+          <DialogTitle className="flex items-center gap-2 text-lg">
+            <History className="h-4 w-4" />
             Change History: {widget.title}
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-sm">
             View and manage all changes made to this widget
           </DialogDescription>
         </DialogHeader>
@@ -122,14 +122,14 @@ export function ChangeHistoryDialog({
         <div className="flex gap-6 h-full overflow-hidden">
           {/* Changes List */}
           <div className="flex-1">
-            <h3 className="font-medium mb-3">Recent Changes</h3>
+            <h3 className="font-medium mb-3 text-sm">Recent Changes</h3>
             <ScrollArea className="h-full">
               <div className="space-y-3">
                 {changes.length === 0 ? (
                   <Card className="text-center py-8">
                     <CardContent>
-                      <History className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
-                      <p className="text-muted-foreground">
+                      <History className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                      <p className="text-muted-foreground text-sm">
                         No changes recorded
                       </p>
                     </CardContent>
@@ -145,7 +145,7 @@ export function ChangeHistoryDialog({
                       }`}
                       onClick={() => setSelectedChange(change)}
                     >
-                      <CardContent className="p-4">
+                      <CardContent className="p-3">
                         <div className="flex items-start justify-between">
                           <div className="flex items-start gap-3">
                             {getChangeIcon(change.changeType)}
@@ -156,7 +156,7 @@ export function ChangeHistoryDialog({
                                 >
                                   v{change.version}
                                 </Badge>
-                                <span className="text-sm font-medium">
+                                <span className="text-xs font-medium">
                                   {formatChangeDescription(change)}
                                 </span>
                               </div>
@@ -209,14 +209,14 @@ export function ChangeHistoryDialog({
           {/* Change Details */}
           {selectedChange && (
             <div className="w-1/3 border-l pl-6">
-              <h3 className="font-medium mb-3">Change Details</h3>
+              <h3 className="font-medium mb-3 text-sm">Change Details</h3>
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-sm flex items-center gap-2">
+                  <CardTitle className="text-xs flex items-center gap-2">
                     {getChangeIcon(selectedChange.changeType)}
                     Version {selectedChange.version}
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-xs">
                     {formatDistanceToNow(selectedChange.timestamp, {
                       addSuffix: true,
                     })}
@@ -227,14 +227,14 @@ export function ChangeHistoryDialog({
                 <CardContent className="space-y-4">
                   {/* Current Data */}
                   <div>
-                    <h4 className="text-sm font-medium mb-2">New State</h4>
-                    <div className="bg-muted rounded p-3">
-                      <div className="text-sm">
+                    <h4 className="text-xs font-medium mb-2">New State</h4>
+                    <div className="bg-muted rounded p-2">
+                      <div className="text-xs">
                         <strong>Title:</strong> {selectedChange.newData.title}
                       </div>
-                      <div className="text-sm mt-1">
+                      <div className="text-xs mt-1">
                         <strong>Data:</strong>
-                        <pre className="text-xs mt-1 overflow-auto max-h-32">
+                        <pre className="text-xs mt-1 overflow-auto max-h-24">
                           {JSON.stringify(selectedChange.newData.data, null, 2)}
                         </pre>
                       </div>
@@ -244,17 +244,17 @@ export function ChangeHistoryDialog({
                   {/* Previous Data */}
                   {selectedChange.previousData && (
                     <div>
-                      <h4 className="text-sm font-medium mb-2">
+                      <h4 className="text-xs font-medium mb-2">
                         Previous State
                       </h4>
-                      <div className="bg-muted/50 rounded p-3">
-                        <div className="text-sm">
+                      <div className="bg-muted/50 rounded p-2">
+                        <div className="text-xs">
                           <strong>Title:</strong>{" "}
                           {selectedChange.previousData.title}
                         </div>
-                        <div className="text-sm mt-1">
+                        <div className="text-xs mt-1">
                           <strong>Data:</strong>
-                          <pre className="text-xs mt-1 overflow-auto max-h-32">
+                          <pre className="text-xs mt-1 overflow-auto max-h-24">
                             {JSON.stringify(
                               selectedChange.previousData.data,
                               null,

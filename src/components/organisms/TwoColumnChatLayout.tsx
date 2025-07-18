@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ChatInterface } from "./ChatInterface";
 import { AnalysisDashboard } from "./AnalysisDashboard";
 import { useChat } from "@/hooks/useChat";
@@ -9,6 +10,7 @@ import { ProcessedReport } from "@/types";
 import { cn } from "@/lib/utils";
 
 export function TwoColumnChatLayout() {
+  const router = useRouter();
   const { currentStep, resetChat } = useChat();
   const [currentReport, setCurrentReport] = useState<ProcessedReport | null>(
     null
@@ -32,9 +34,8 @@ export function TwoColumnChatLayout() {
   }, [currentStep]);
 
   const handleStartNewAnalysis = () => {
-    setShowDashboard(false);
-    setCurrentReport(null);
-    resetChat();
+    // Navigate back to the main dashboard instead of resetting chat
+    router.push("/dashboard");
   };
 
   const handleExportReport = (format: "pdf" | "doc" | "ppt") => {
